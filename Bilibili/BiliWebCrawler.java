@@ -96,10 +96,9 @@ public class BiliWebCrawler {
         if(startIndex+1>count)
             return -2;
         else if(endIndex+1>count) {
-            endIndex = count;
+            endIndex = count-1;
             flag=count;
         }
-
         for(int i=startIndex;i<=endIndex;i++){
             JSONObject jo=jsonArray.getJSONObject(i-startIndex);
             voif[i].title=jo.getString("title");
@@ -143,7 +142,7 @@ public class BiliWebCrawler {
 
     private void writeToDataBase(VideosInfo[] voif,int startIndex,int endIndex) throws Exception{
         Class.forName("com.mysql.cj.jdbc.Driver");
-	//XXXXX分别为 库名 用户名 密码 表名
+        //XXXXX分别为 库名 用户名 密码 表名
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/XXXXXX?characterEncoding=utf8&useSSL=false&serverTimezone=UTC", "XXXX", "XXXXX");
         String sql = "insert into XXXXXXXX(标题,副标题,发布时间,描述,长度,封面图片路径,投币数,点赞数,收藏数,分享数,回复数) values(?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement st = (PreparedStatement) conn.prepareStatement(sql);
