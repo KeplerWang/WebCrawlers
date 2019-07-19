@@ -160,7 +160,7 @@ public class DouBanWebCrawler {
     // 数据库写入
     private void writeToDataBase(MoviesInfo[] mvif,int startIndex,int endIndex) throws Exception{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        //XXXXX分别为 库名 用户名 密码 表明
+        //XXXXX分别为 库名 用户名 密码 表名
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/XXXXX?characterEncoding=utf8&useSSL=false&serverTimezone=UTC", "XXXXXXX", "XXXXXXX");
         String sql = "insert into XXXXXXX(中文名,外文名,香港名,台湾名,是否可播放,导演,主演,上映年份,国家,影片类型,评价星级,评价人数,电影评语) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement st = (PreparedStatement) conn.prepareStatement(sql);

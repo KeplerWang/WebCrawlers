@@ -143,8 +143,9 @@ public class BiliWebCrawler {
 
     private void writeToDataBase(VideosInfo[] voif,int startIndex,int endIndex) throws Exception{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/WebCrawlers?characterEncoding=utf8&useSSL=false&serverTimezone=UTC", "root", "063710");
-        String sql = "insert into BiliBili(标题,副标题,发布时间,描述,长度,封面图片路径,投币数,点赞数,收藏数,分享数,回复数) values(?,?,?,?,?,?,?,?,?,?,?)";
+	//XXXXX分别为 库名 用户名 密码 表名
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/XXXXXX?characterEncoding=utf8&useSSL=false&serverTimezone=UTC", "XXXX", "XXXXX");
+        String sql = "insert into XXXXXXXX(标题,副标题,发布时间,描述,长度,封面图片路径,投币数,点赞数,收藏数,分享数,回复数) values(?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement st = (PreparedStatement) conn.prepareStatement(sql);
         for (int s = startIndex; s <= endIndex; s++) {
             VideosInfo temp = voif[s];
