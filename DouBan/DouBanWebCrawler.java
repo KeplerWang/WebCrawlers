@@ -12,34 +12,40 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class DouBanWebCrawler {
-    String url = "https://movie.douban.com/top250?start=0&filter=";//默认第一页 获取25个
-    int num=25;
+    private String url = "https://movie.douban.com/top250?start=0&filter=";//默认第一页 获取25个
+    private int num=25;
     public DouBanWebCrawler(String url,int num){
         this.url=url;
-        this.num=num;
+        if(num>250||num<=0)
+            this.num=25;
+        else
+            this.num=num;
     }
     public DouBanWebCrawler(String url){
         this.url=url;
     }
     public DouBanWebCrawler(int num){
-        this.num=num;
+        if(num>250||num<=0)
+            this.num=25;
+        else
+            this.num=num;
     }
     public DouBanWebCrawler(){
         super();
     }
 
     public void getInformation()throws Exception{
-        int number;
+        int pageNumber;//页面数
         if(num%25==0)
-            number=num/25;
-        else number=num/25+1;
-        MoviesInfo[] mvif=new MoviesInfo[number*25];
-        for(int q=0;q<number*25;q++)
+            pageNumber=num/25;
+        else pageNumber=num/25+1;
+        MoviesInfo[] mvif=new MoviesInfo[pageNumber*25];
+        for(int q=0;q<pageNumber*25;q++)
             mvif[q]=new MoviesInfo();
-        for(int i=1;i<=number;i++) {
+        for(int i=1;i<=pageNumber;i++) {
             String[] temp=url.split("=");
             String myurl=temp[0]+"="+((i-1)*25)+"&filter=";
-            getInformationTool(myurl, mvif, (i - 1) * 25, i * 24);
+            getInformationTool(myurl, mvif, (i - 1) * 25, i * 25-1);
         }
         System.out.print("是否写入数据库Y/N？");
         Scanner in=new Scanner(System.in);
@@ -154,7 +160,7 @@ public class DouBanWebCrawler {
     // 数据库写入
     private void writeToDataBase(MoviesInfo[] mvif,int startIndex,int endIndex) throws Exception{
         Class.forName("com.mysql.cj.jdbc.Driver");
-	//XXXXX分别为 库名 用户名 密码 表明
+        //XXXXX分别为 库名 用户名 密码 表明
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/XXXXX?characterEncoding=utf8&useSSL=false&serverTimezone=UTC", "XXXXXXX", "XXXXXXX");
         String sql = "insert into XXXXXXX(中文名,外文名,香港名,台湾名,是否可播放,导演,主演,上映年份,国家,影片类型,评价星级,评价人数,电影评语) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement st = (PreparedStatement) conn.prepareStatement(sql);
