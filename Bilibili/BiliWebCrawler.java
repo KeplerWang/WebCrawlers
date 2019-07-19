@@ -111,7 +111,13 @@ public class BiliWebCrawler {
             String picUrl="https:"+jo.getString("pic");
             HttpURLConnection huc1 = (HttpURLConnection) new URL(picUrl).openConnection();
             huc1.connect();
-            FileOutputStream fos=new FileOutputStream("/home/kepler/Pictures/"+ voif[i].title+".jpg");
+            StringBuilder stringBuilder = new StringBuilder();
+            if(voif[i].title.contains("/")) {
+                for (String s : voif[i].title.split("/|\\.")) {
+                    stringBuilder.append(s);
+                }
+            }
+            FileOutputStream fos=new FileOutputStream("/home/kepler/Pictures/"+stringBuilder.toString()+".jpg");
             fos.write(huc1.getInputStream().readAllBytes());
             fos.close();
             huc1.disconnect();
