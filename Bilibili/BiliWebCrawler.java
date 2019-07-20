@@ -116,7 +116,9 @@ public class BiliWebCrawler {
                 for (String s : voif[i].title.split("/|\\.")) {
                     stringBuilder.append(s);
                 }
-            }
+            
+	    }else
+		    stringBuilder.append(voif[i].title);
             FileOutputStream fos=new FileOutputStream("/home/kepler/Pictures/"+stringBuilder.toString()+".jpg");
             fos.write(huc1.getInputStream().readAllBytes());
             fos.close();
