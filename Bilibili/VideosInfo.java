@@ -1,8 +1,5 @@
 package Bilibili;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 public class VideosInfo {
     String title;
     String subTitle;
